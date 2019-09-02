@@ -6,6 +6,7 @@ import axios from 'axios'
 import Scroller from '@/components/Scroller'
 import Loading from '@/components/Loading'
 
+// axios.defaults.baseURL = 'http://39.97.33.178'
 Vue.prototype.axios = axios
 
 Vue.filter('setWH', (url, arg) => {

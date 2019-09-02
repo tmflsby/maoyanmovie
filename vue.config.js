@@ -3,6 +3,7 @@
 // }
 
 module.exports = {
+  publicPath: '/shuaiyang',
   devServer: {
     proxy: {
       '/api': {
