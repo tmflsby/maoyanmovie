@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import { clearTimeout, setTimeout } from 'timers'
 export default {
   name: 'Search',
   data () {
@@ -49,10 +48,12 @@ export default {
     message (newValue) {
       console.log(newValue)
 
-      this.cancelRequest()
       let that = this
+      this.cancelRequest()
 
-      this.axios.get('/api/searchList?cityId=10&kw=a' + newValue, {
+      const cityId = this.$store.state.City.id
+
+      this.axios.get('/api/searchList?cityId=' + cityId + '&kw=a' + newValue, {
         cancelToken: new this.axios.CancelToken(function (c) {
           that.source = c
         })
