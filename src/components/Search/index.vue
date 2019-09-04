@@ -37,7 +37,7 @@ export default {
       moviesList: []
     }
   },
-  methods: {
+  methods: { // axios终止多次请求
     cancelRequest () {
       if (typeof this.source === 'function') {
         this.source('终止请求')

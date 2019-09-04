@@ -79,17 +79,17 @@ export default {
     }
   },
   methods: {
-    formatCityList (cities) {
+    formatCityList (cities) { // 城市分组
       const cityList = []
       const hotList = []
 
-      cities.map((e, i, arry) => {
+      cities.map((e, i, arry) => { // 热门城市
         if (cities[i].isHot === 1) {
           hotList.push(cities[i])
         }
       })
 
-      cities.map((e, i, arr) => {
+      cities.map((e, i, arr) => { // 根据拼音来进行ABC分组
         const firstLetter = cities[i].py.substring(0, 1).toUpperCase()
         if (toCom(firstLetter)) {
           cityList.push({
@@ -114,7 +114,7 @@ export default {
         return true
       }
 
-      cityList.sort((n1, n2) => {
+      cityList.sort((n1, n2) => { // 排序
         if (n1.index > n2.index) {
           return 1
         } else if (n1.index < n2.index) {
@@ -128,7 +128,7 @@ export default {
       console.log(hotList)
       return { cityList, hotList }
     },
-    handleToIndex (index) {
+    handleToIndex (index) { // 点击ABCD跳转到ABCD相应的城市位置
       // console.log(index)
       const h2 = this.$refs.city_sort.getElementsByTagName('h2')
       // this.$refs.city_sort.parentNode.scrollTop = h2[index].offsetTop

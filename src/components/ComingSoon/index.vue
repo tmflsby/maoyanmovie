@@ -1,8 +1,9 @@
 <template>
   <div class="movie_body">
     <Loading v-if="isLoading"></Loading>
-    <Scroller v-else>
+    <Scroller v-else :handleToScroll='handleToScroll' :handleToTouchEnd='handleToTouchEnd'>
       <ul>
+        <li class="pullDown">{{pullDownMsg}}</li>
         <li v-for="item in comingList" :key="item.id">
           <div class="pic_show" @tap="handleToDetail(item.id)">
             <img :src="item.img | setWH('128.180')" />
@@ -31,6 +32,7 @@ export default {
   data () {
     return {
       comingList: [],
+      pullDownMsg: '',
       isLoading: true,
       prevCityId: -1
     }
@@ -39,6 +41,28 @@ export default {
     handleToDetail (movieId) {
       // console.log(movieId)
       this.$router.push('/movie/detail/2/' + movieId)
+    },
+    handleToScroll (pos) {
+      if (pos.y > 30) {
+        this.pullDownMsg = '正在更新中'
+      }
+    },
+    handleToTouchEnd (pos) {
+      const cityId = this.$store.state.City.id
+      if (pos.y > 30) {
+        this.axios.get('/api/movieComingList?cityId=' + cityId).then(res => {
+          console.log(res)
+          const msg = res.data.msg
+          if (msg === 'ok') {
+            this.pullDownMsg = '更新成功'
+            setTimeout(() => {
+              this.comingList = res.data.data.comingList
+              console.log(this.comingList)
+              this.pullDownMsg = ''
+            }, 1000)
+          }
+        })
+      }
     }
   },
   activated () {
@@ -132,5 +156,10 @@ export default {
 }
 .movie_body .btn_pre {
   background-color: #3c9fe6;
+}
+.movie_body .pullDown {
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 </style>

@@ -27,13 +27,13 @@
         <p>{{detailMovie.dra}}</p>
       </div>
       <div class="detail_player swiper-container" ref="detail_player">
-        <ul class="swiper-wrapper">
-          <li class="swiper-slide" v-for="(item,index) in detailMovie.photos" :key="index">
+        <swiper :options="swiperOption" class="swiper-wrapper">
+          <swiper-slide class="swiper-slide" v-for="(item,index) in detailMovie.photos" :key="index">
             <div>
               <img :src="item | setWH('140.127')" alt />
             </div>
-          </li>
-        </ul>
+          </swiper-slide>
+        </swiper>
       </div>
     </div>
   </div>
@@ -49,7 +49,12 @@ export default {
   data () {
     return {
       detailMovie: {},
-      isLoading: true
+      isLoading: true,
+      swiperOption: {
+        slidesPerView: 'auto',
+        freeMode: true,
+        freeModeSticky: true
+      }
     }
   },
   props: ['movieId'],
@@ -68,14 +73,14 @@ export default {
 
         this.isLoading = false
 
-        this.$nextTick(() => {
-          // eslint-disable-next-line no-new
-          new Swiper(this.$refs.detail_player, {
-            slidesPerView: 'auto',
-            freeMode: true,
-            freeModeSticky: true
-          })
-        })
+        // this.$nextTick(() => {
+        //   // eslint-disable-next-line no-new
+        //   new Swiper(this.$refs.detail_player, {
+        //     slidesPerView: 'auto',
+        //     freeMode: true,
+        //     freeModeSticky: true
+        //   })
+        // })
       }
     })
   }

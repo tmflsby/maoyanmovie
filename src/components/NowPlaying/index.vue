@@ -39,6 +39,11 @@ export default {
       prevCityId: -1
     }
   },
+  mounted () {
+    // this.axios.post('https://easy-mock.com/mock/5d6e6500c3df5d4ef00b1953/ddd/test').then((res) => {
+    //   console.log(res)
+    // })
+  },
   activated () {
     // console.log(this.$refs.scroller.$el.offsetHeight, this.$refs.ul.offsetHeight)
 
