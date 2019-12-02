@@ -1,10 +1,11 @@
 <template>
   <div class="cinema_body">
     <Loading v-if="isLoading"></Loading>
-    <Scroller v-else>
+    <Scroller v-else :handleToScroll='handleToScroll' :handleToTouchEnd='handleToTouchEnd'>
       <ul>
+        <li class="pullDown">{{pullDownMsg}}</li>
         <li v-for="item in cinemas" :key="item.id">
-          <div>
+          <div class="title">
             <span>{{item.nm}}</span>
             <span class="q">
               <span class="price">{{item.sellPrice}}</span> 元起
@@ -35,7 +36,8 @@ export default {
     return {
       cinemas: [],
       isLoading: true,
-      prevCityId: -1
+      prevCityId: -1,
+      pullDownMsg: ''
     }
   },
   activated () {
@@ -90,6 +92,30 @@ export default {
         ''
       )
     }
+  },
+  methods: {
+    handleToScroll (pos) {
+      if (pos.y > 30) {
+        this.pullDownMsg = '正在更新中...'
+      }
+    },
+    handleToTouchEnd (pos) {
+      const cityId = this.$store.state.City.id
+      if (pos.y > 30) {
+        this.axios.get('/api/cinemaList?cityId=' + cityId).then(res => {
+          console.log(res)
+          const msg = res.data.msg
+          if (msg === 'ok') {
+            this.pullDownMsg = '更新成功'
+            setTimeout(() => {
+              this.cinemas = res.data.data.cinemas
+              console.log(this.cinemas)
+              this.pullDownMsg = ''
+            }, 1000)
+          }
+        })
+      }
+    }
   }
 }
 </script>
@@ -100,12 +126,17 @@ export default {
   overflow: auto;
 }
 .cinema_body ul {
-  padding: 20px;
+  padding: 0 20px;
 }
 .cinema_body li {
   border-bottom: 1px solid #e6e6e6;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
 }
+
+.cinema_body li .title{
+  margin: 10px 0;
+}
+
 .cinema_body div {
   margin-bottom: 10px;
 }

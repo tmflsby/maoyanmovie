@@ -44,7 +44,7 @@ export default {
     },
     handleToScroll (pos) {
       if (pos.y > 30) {
-        this.pullDownMsg = '正在更新中'
+        this.pullDownMsg = '正在更新中...'
       }
     },
     handleToTouchEnd (pos) {

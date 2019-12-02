@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <Header title="我的猫眼 🐱"></Header>
+    <Header title="我的猫眼"></Header>
     <div class="content">
       <Login></Login>
     </div>

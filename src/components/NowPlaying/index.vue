@@ -71,7 +71,7 @@ export default {
         //   bscroll.on('scroll', pos => {
         //     console.log('bscroll')
         //     if (pos.y > 30) {
-        //       this.pullDownMsg = '正在更新中'
+        //       this.pullDownMsg = '正在更新中...'
         //     }
         //   })
 

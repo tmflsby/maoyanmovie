@@ -7,8 +7,11 @@ import Scroller from '@/components/Scroller'
 import Loading from '@/components/Loading'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import FastClick from 'fastclick'
 
 Vue.use(VueAwesomeSwiper)
+
+FastClick.attach(document.body)
 
 // axios.defaults.baseURL = 'http://39.97.33.178'
 Vue.prototype.axios = axios
