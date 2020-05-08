@@ -35,6 +35,9 @@
           v-for="(item,index) in cityList"
           :key="item.index"
           @touchstart="handleToIndex(index)"
+          @touchstart.prevent='handleTouchStart'
+          @touchmove='handleTouchMove'
+          @touchend='handleTouchEnd'
         >{{item.index}}</li>
       </ul>
     </div>
@@ -48,7 +51,10 @@ export default {
     return {
       cityList: [],
       hotList: [],
-      isLoading: true
+      isLoading: true,
+      touchStatus: false,
+      startY: 0,
+      timer: null
     }
   },
   mounted () {
@@ -134,6 +140,31 @@ export default {
       // this.$refs.city_sort.parentNode.scrollTop = h2[index].offsetTop
       this.$refs.city_list.toScrollTop(-h2[index].offsetTop)
     },
+    handleTouchStart () {
+      this.touchStatus = true
+    },
+    handleTouchMove (e) {
+      if (this.touchStatus) {
+        if (this.timer) {
+          clearTimeout(this.timer)
+        }
+        this.timer = setTimeout(() => {
+          // const startY = this.$refs['A'][0].offsetTop
+          // console.log(startY)
+          const touchY = e.touches[0].clientY - 130
+          // console.log(touchY)
+          const index = Math.floor((touchY - this.startY) / 20.67)
+          // console.log(index)
+          if (index >= 0 && index < this.cityList.length) {
+            const h2 = this.$refs.city_sort.getElementsByTagName('h2')
+            this.$refs.city_list.toScrollTop(-h2[index].offsetTop)
+          }
+        }, 16)
+      }
+    },
+    handleTouchEnd () {
+      this.touchStatus = false
+    },
     handleToCity (nm, id) {
       this.$store.commit('City/CITY_INFO', { nm, id })
       window.localStorage.setItem('nowNm', nm)
@@ -163,7 +194,7 @@ export default {
   width: 0;
 }
 .city_body .city_hot {
-  margin-top: 20px;
+  /*margin-top: 20px;*/
 }
 .city_body .city_hot h2 {
   padding-left: 15px;
