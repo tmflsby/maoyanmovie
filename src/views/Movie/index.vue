@@ -44,8 +44,7 @@ export default {
           const nm = res.data.data.nm
           const id = res.data.data.id
 
-          // eslint-disable-next-line eqeqeq
-          if (this.$store.state.City.id == id) { return }
+          if (this.$store.state.City.id === id) { return }
 
           messageBox({
             title: '定位',
